@@ -1,7 +1,7 @@
 {
   "user": [
     {"username": "George"},
-    {"password": "54321"}
+    {"password": 54321}
   ]
 }
 
