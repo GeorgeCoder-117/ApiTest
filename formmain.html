@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PRUEBA FORMULARIO</title>
+</head>
+<body>
+
+	<center>
+		<h1>FORM</h1>
+		<br><br>
+		<form>
+			<label>User</label>
+			<input type="text" id="UserName">
+			<br><br>
+			<label>Password</label>
+			<input type="password" id="Psw">
+			<br><br>
+			<a id="btnSendData">CLICK</a>
+		</form>
+	</center>
+
+	<script type="text/javascript">		
+
+		// GET DATA BY HTTP REQUEST
+
+		const ajaxRequest = new XMLHttpRequest();
+		const url = "https://my-json-server.typicode.com/GeorgeCoder-117/ApiTest";
+
+		ajaxRequest.open("GET",`${url}/db`,true);
+
+		let serverResponse;		
+
+		ajaxRequest.onreadystatechange = function() {
+
+			if (this.readyState == 4 && this.status == 200) {
+
+				serverResponse = JSON.parse(ajaxRequest.responseText); // Convert String to JSON value
+				console.log(serverResponse); //RETURN JSON VALUE
+
+				// VALIDATE JSON VALUES ON FORM
+
+				let username = document.getElementById("UserName");
+				let psw = document.getElementById("Psw");
+				let btnData = document.getElementById("btnSendData");
+
+				btnData.addEventListener("click", () => {
+
+					if (username.value == serverResponse.user[0].username && psw.value == serverResponse.user[1].password) {
+						alert("Access authorized (:");
+						window.location.assign("formtest.html");
+					}
+
+					else if (username.value === "" && psw.value ==="") {
+						alert("Access Denied .. Please fill the empty fields");
+					}
+
+					else {
+						alert("You give wrong values");
+					}
+
+				});
+
+
+			}
+
+		};
+
+		ajaxRequest.send();
+
+
+
+
+
+	</script>
+
+</body>
+</html>
